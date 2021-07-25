@@ -71,13 +71,12 @@ def append_deltas(df: pd.DataFrame) -> pd.DataFrame:
     delta_x = {k: v[1] for k, v in deltas.items()}
     delta_y = {k: v[2] for k, v in deltas.items()}
     
-    # Append deltas        lon2 = row.lon
-
+    # Append deltas
     df = df.join(pd.Series(delta, name='delta'))
     df = df.join(pd.Series(delta_x, name='delta_x'))
     df = df.join(pd.Series(delta_y, name='delta_y'))
     
-    # Calculate velocities on the latitude and longitude axes
+    # Calculate direction vectors on the latitude and longitude axes
     df = df.assign(u_x=lambda df: df.delta_x / df.delta)
     df = df.assign(u_y=lambda df: df.delta_y / df.delta)
     
